@@ -1,7 +1,6 @@
 const rootDiv = document.querySelector('#root')
 
-
-/*function createHomePage() {*/
+function createHomePage() {
     const container = document.createElement('div')
     const homePageContainer = document.createElement('div')
     const img = document.createElement('img')
@@ -18,11 +17,11 @@ const rootDiv = document.querySelector('#root')
     img.alt = 'image quiz'
     button.innerText = "Let's go!"
 
-    //anidar
     homePageContainer.appendChild(img)
     homePageContainer.appendChild(button)
     container.appendChild(homePageContainer)
 
+    rootDiv.appendChild(container)
+}
 
-
-rootDiv.appendChild(container)
+createHomePage()
