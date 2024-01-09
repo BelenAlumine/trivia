@@ -30,38 +30,7 @@ function createHomePage() {
 function openGame() {
     cleanPage()
     
-    //creat question
-    const container = document.querySelector('#container')
-    const gameContainer = document.createElement('div')
-    const questionContainer = document.createElement('div')
-    const question = document.createElement('p')
-    const optionContainer = document.createElement('div')
-    const a = document.createElement('p')
-    const b = document.createElement('p')
-    const c = document.createElement('p')
-    const d = document.createElement('p')
-
-    //set class
-    gameContainer.classList.add('game-container')
-    questionContainer.classList.add('question-container')    
-    optionContainer.classList.add('option-container')
-
-    //elements content
-    question.innerText = "What color was the white horse of San Martín?"
-    a.innerText = "Black"
-    b.innerText = "White"
-    c.innerText = "Blue"
-    d.innerText = "San Mar4tín did not have a horse"
-
-    //add elements
-    gameContainer.appendChild(questionContainer)
-    gameContainer.appendChild(optionContainer)
-    questionContainer.appendChild(question)
-    optionContainer.appendChild(a)
-    optionContainer.appendChild(b)
-    optionContainer.appendChild(c)
-    optionContainer.appendChild(d)
-    container.appendChild(gameContainer)
+    addQuestion()
 
 }
 
@@ -72,6 +41,47 @@ function cleanPage() {
     
     container.removeChild(container.firstChild)
    }
+}
+
+function addQuestion() {
+    const container = document.querySelector('#container')
+    const gameContainer = document.createElement('div')
+    const questionContainer = document.createElement('div')
+    const question = document.createElement('p')
+    const optionContainer = document.createElement('div')
+    const a = document.createElement('p')
+    const b = document.createElement('p')
+    const c = document.createElement('p')
+    const d = document.createElement('p')
+    const playButtonContainer = document.createElement('div')
+    const playButton = document.createElement('button') 
+
+    //set class
+    gameContainer.classList.add('game-container')
+    questionContainer.classList.add('question-container')    
+    optionContainer.classList.add('option-container')
+    playButtonContainer.classList.add('play-button-container')
+    playButton.classList.add('play-button')
+
+    //elements content
+    question.innerText = "What color was the white horse of San Martín?"
+    a.innerText = "Black"
+    b.innerText = "White"
+    c.innerText = "Blue"
+    d.innerText = "San Mar4tín did not have a horse"
+    playButton.innerText = "Play"
+
+    //add elements
+    gameContainer.appendChild(questionContainer)
+    gameContainer.appendChild(optionContainer)
+    gameContainer.appendChild(playButtonContainer)
+    questionContainer.appendChild(question)
+    optionContainer.appendChild(a)
+    optionContainer.appendChild(b)
+    optionContainer.appendChild(c)
+    optionContainer.appendChild(d)
+    playButtonContainer.appendChild(playButton)
+    container.appendChild(gameContainer)
 }
 
 createHomePage()
