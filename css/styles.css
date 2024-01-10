@@ -101,6 +101,20 @@ label:hover {
     height: 13%;
     width: 100%;
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: center;
+}
+
+.game-button {
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: rgb(128, 73, 179);
+    color: white;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.game-button:hover {
+    background-color: aliceblue;
+    color: black;
 }

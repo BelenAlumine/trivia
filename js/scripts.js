@@ -48,10 +48,6 @@ function startGame() {
     const gameContainer = document.createElement('div')
     const optionContainer = document.createElement('div')
     const form = document.createElement('form') 
-    const a = document.createElement('input')
-    const al = document.createElement('label')
-    const playButtonContainer = document.createElement('div')
-    const playButton = document.createElement('button') 
 
     //set class
     gameContainer.classList.add('game-container')
@@ -59,8 +55,6 @@ function startGame() {
     optionContainer.classList.add('option-container')
     form.classList.add('form')
     form.id = 'form'
-    playButtonContainer.classList.add('play-button-container')
-    playButton.classList.add('play-button')
 
     //elements content
     addQuestion(gameContainer)
@@ -69,17 +63,26 @@ function startGame() {
     addOption(form, 'b', 'White')
     addOption(form, 'c', 'Blue')
     addOption(form, 'd', "San Martín did not have a horse")
-
-    playButton.innerText = "Play"
     
     //add elements
     gameContainer.appendChild(optionContainer)
-    gameContainer.appendChild(playButtonContainer)
-
     optionContainer.appendChild(form)
-    playButtonContainer.appendChild(playButton)
     
+    addButtons(gameContainer)
+
     container.appendChild(gameContainer)
+}
+
+function addQuestion(gameContainer) {
+    const questionContainer = document.createElement('div')
+    const question = document.createElement('p')
+
+    questionContainer.classList.add('question-container')
+
+    question.innerText = "What color was the white horse of San Martín?"
+
+    questionContainer.appendChild(question)
+    gameContainer.appendChild(questionContainer)
 }
 
 function addOption(form, option, content) {
@@ -99,14 +102,19 @@ function addOption(form, option, content) {
     form.appendChild(optionLabel)
 }
 
-function addQuestion(gameContainer) {
-    const questionContainer = document.createElement('div')
-    const question = document.createElement('p')
+function addButtons(gameContainer) {
+    const playButtonContainer = document.createElement('div')
+    const playButton = document.createElement('button') 
+    const nextButton = document.createElement('button') 
 
-    questionContainer.classList.add('question-container')
+    playButtonContainer.classList.add('play-button-container')
+    playButton.classList.add('game-button', 'play')
+    nextButton.classList.add('game-button', 'next')
 
-    question.innerText = "What color was the white horse of San Martín?"
+    playButton.innerText = "Play"
+    nextButton.innerText = "Next"
 
-    questionContainer.appendChild(question)
-    gameContainer.appendChild(questionContainer)
+    gameContainer.appendChild(playButtonContainer)
+    playButtonContainer.appendChild(playButton)
+    playButtonContainer.appendChild(nextButton)
 }
