@@ -85,15 +85,18 @@
 
 input {
     display: none;
+    width: 100%;
 }
 
 label {
     padding: 10px 20px;
+    width: 100%;
 }
 
 label:hover {
     background-color: rgb(185, 3, 3);
     width: 100%;
+    cursor: pointer;
 }
 
 .play-button-container {
@@ -117,4 +120,5 @@ label:hover {
 .game-button:hover {
     background-color: aliceblue;
     color: black;
+    cursor: pointer;
 }

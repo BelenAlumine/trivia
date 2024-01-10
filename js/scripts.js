@@ -46,31 +46,32 @@ function startGame() {
     const container = document.querySelector('#container')
 
     const gameContainer = document.createElement('div')
+
+    gameContainer.classList.add('game-container')
+    gameContainer.id = 'game-container'
+
+    addQuestion(gameContainer)
+    addOptions(gameContainer)    
+    addButtons(gameContainer)
+
+    container.appendChild(gameContainer)
+}
+
+function addOptions(gameContainer) {
     const optionContainer = document.createElement('div')
     const form = document.createElement('form') 
 
-    //set class
-    gameContainer.classList.add('game-container')
-    gameContainer.id = 'game-container'
     optionContainer.classList.add('option-container')
     form.classList.add('form')
     form.id = 'form'
 
-    //elements content
-    addQuestion(gameContainer)
-    //options
     addOption(form, 'a', 'Black')
     addOption(form, 'b', 'White')
     addOption(form, 'c', 'Blue')
     addOption(form, 'd', "San Martín did not have a horse")
-    
-    //add elements
+
     gameContainer.appendChild(optionContainer)
     optionContainer.appendChild(form)
-    
-    addButtons(gameContainer)
-
-    container.appendChild(gameContainer)
 }
 
 function addQuestion(gameContainer) {
