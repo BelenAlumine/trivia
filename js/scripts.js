@@ -1,5 +1,7 @@
 const rootDiv = document.querySelector('#root')
 
+createHomePage()
+
 function createHomePage() {
     const container = document.createElement('div')
     const homePageContainer = document.createElement('div')
@@ -28,31 +30,29 @@ function createHomePage() {
 }
 
 function openGame() {
-    cleanPage()
-    
+    cleanPage()    
     addQuestion()
-
 }
 
 function cleanPage() {
    const container = document.querySelector('#container')
-   console.log(container)
+
    while (container.firstChild) {
-    
-    container.removeChild(container.firstChild)
+        container.removeChild(container.firstChild)
    }
 }
 
 function addQuestion() {
     const container = document.querySelector('#container')
+
     const gameContainer = document.createElement('div')
+//    gameContainer.id = 'game-container'
     const questionContainer = document.createElement('div')
     const question = document.createElement('p')
     const optionContainer = document.createElement('div')
-    const a = document.createElement('p')
-    const b = document.createElement('p')
-    const c = document.createElement('p')
-    const d = document.createElement('p')
+    const form = document.createElement('form') 
+    const a = document.createElement('input')
+    const al = document.createElement('label')
     const playButtonContainer = document.createElement('div')
     const playButton = document.createElement('button') 
 
@@ -60,28 +60,63 @@ function addQuestion() {
     gameContainer.classList.add('game-container')
     questionContainer.classList.add('question-container')    
     optionContainer.classList.add('option-container')
+    form.classList.add('form')
+    form.id = 'form'
     playButtonContainer.classList.add('play-button-container')
     playButton.classList.add('play-button')
 
     //elements content
     question.innerText = "What color was the white horse of San Martín?"
-    a.innerText = "Black"
-    b.innerText = "White"
-    c.innerText = "Blue"
-    d.innerText = "San Mar4tín did not have a horse"
-    playButton.innerText = "Play"
+    
+    //options
+    addOption(form, 'a', 'Black')
+    addOption(form, 'b', 'White')
+    addOption(form, 'c', 'Blue')
+    addOption(form, 'd', "San Martín did not have a horse")
 
+    playButton.innerText = "Play"
+    
     //add elements
     gameContainer.appendChild(questionContainer)
     gameContainer.appendChild(optionContainer)
     gameContainer.appendChild(playButtonContainer)
     questionContainer.appendChild(question)
-    optionContainer.appendChild(a)
-    optionContainer.appendChild(b)
-    optionContainer.appendChild(c)
-    optionContainer.appendChild(d)
+
+    optionContainer.appendChild(form)
+    form.appendChild(a)
+    form.appendChild(al)
     playButtonContainer.appendChild(playButton)
+    
     container.appendChild(gameContainer)
 }
 
-createHomePage()
+function addOption(form, option, content) {
+    const input = document.createElement('input')
+    const optionLabel = document.createElement('label')
+
+    input.type = 'radio'
+    input.name = 'choise-' + option
+    input.value = content
+    input.id = option
+
+    optionLabel.innerText = content
+    optionLabel.class = 'label-' + option
+    optionLabel.for = option
+
+    form.appendChild(input)    
+    form.appendChild(optionLabel)
+}
+
+/*function addQuestion() {
+    const gameContainer = document.getElementById('#game-container')
+    console.log(gameContainer)
+    const questionContainer = document.createElement('div')
+    const question = document.createElement('p')
+
+    questionContainer.classList.add('question-container')
+
+    question.innerText = "What color was the white horse of San Martín?"
+
+    questionContainer.appendChild(question)
+    gameContainer.appendChild(questionContainer)
+}*/
