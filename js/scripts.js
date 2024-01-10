@@ -31,7 +31,7 @@ function createHomePage() {
 
 function openGame() {
     cleanPage()    
-    addQuestion()
+    startGame()
 }
 
 function cleanPage() {
@@ -42,13 +42,10 @@ function cleanPage() {
    }
 }
 
-function addQuestion() {
+function startGame() {
     const container = document.querySelector('#container')
 
     const gameContainer = document.createElement('div')
-//    gameContainer.id = 'game-container'
-    const questionContainer = document.createElement('div')
-    const question = document.createElement('p')
     const optionContainer = document.createElement('div')
     const form = document.createElement('form') 
     const a = document.createElement('input')
@@ -58,7 +55,7 @@ function addQuestion() {
 
     //set class
     gameContainer.classList.add('game-container')
-    questionContainer.classList.add('question-container')    
+    gameContainer.id = 'game-container'
     optionContainer.classList.add('option-container')
     form.classList.add('form')
     form.id = 'form'
@@ -66,8 +63,7 @@ function addQuestion() {
     playButton.classList.add('play-button')
 
     //elements content
-    question.innerText = "What color was the white horse of San Martín?"
-    
+    addQuestion(gameContainer)
     //options
     addOption(form, 'a', 'Black')
     addOption(form, 'b', 'White')
@@ -77,14 +73,10 @@ function addQuestion() {
     playButton.innerText = "Play"
     
     //add elements
-    gameContainer.appendChild(questionContainer)
     gameContainer.appendChild(optionContainer)
     gameContainer.appendChild(playButtonContainer)
-    questionContainer.appendChild(question)
 
     optionContainer.appendChild(form)
-    form.appendChild(a)
-    form.appendChild(al)
     playButtonContainer.appendChild(playButton)
     
     container.appendChild(gameContainer)
@@ -95,7 +87,7 @@ function addOption(form, option, content) {
     const optionLabel = document.createElement('label')
 
     input.type = 'radio'
-    input.name = 'choise-' + option
+    input.name = 'choice-' + option
     input.value = content
     input.id = option
 
@@ -107,9 +99,7 @@ function addOption(form, option, content) {
     form.appendChild(optionLabel)
 }
 
-/*function addQuestion() {
-    const gameContainer = document.getElementById('#game-container')
-    console.log(gameContainer)
+function addQuestion(gameContainer) {
     const questionContainer = document.createElement('div')
     const question = document.createElement('p')
 
@@ -119,4 +109,4 @@ function addOption(form, option, content) {
 
     questionContainer.appendChild(question)
     gameContainer.appendChild(questionContainer)
-}*/
+}
