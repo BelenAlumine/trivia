@@ -2,27 +2,34 @@ const rootDiv = document.querySelector('#root')
 
 const getDataGame = async () => {
     try {
-    const APIUrl = 'https://opentdb.com/api.php?amount=1';
+    const APIUrl = 'https://opentdb.com/api.php?amount=20';
     const result = await fetch(`${APIUrl}`)
     const data = await result.json();
-    
-    showQuestions(data.results[0]);
 
+    console.log(data.results)
+
+        return data.results
     }
     catch (error) {
         console.log(error)
     }
 }
 
-createHomePage()
+async function main() {
+    let allQuestions = await getDataGame()
+    
+    createHomePage(allQuestions)
+}
 
-function createHomePage() {
+main()
+
+function createHomePage(allQuestions) {
     const container = document.createElement('div')
     const homePageContainer = document.createElement('div')
     const img = document.createElement('img')
     const button = document.createElement('button')
 
-    button.addEventListener('click', () => openGame())
+    button.addEventListener('click', () => openGame(allQuestions))
 
     //set class
     container.classList.add('container')
@@ -43,9 +50,9 @@ function createHomePage() {
     rootDiv.appendChild(container)
 }
 
-function openGame() {
+function openGame(allQuestions) {
     cleanPage()    
-    startGame()
+    startGame(allQuestions)
 }
 
 function cleanPage() {
@@ -56,7 +63,7 @@ function cleanPage() {
    }
 }
 
-function startGame() {
+function startGame(allQuestions) {
     const container = document.querySelector('#container')
 
     const gameContainer = document.createElement('div')
@@ -64,12 +71,33 @@ function startGame() {
     gameContainer.classList.add('game-container')
     gameContainer.id = 'game-container'
     
-    showQuestion(gameContainer)
-//    addQuestion(gameContainer)
-//    addOptions(gameContainer)    
+    showQuestion(gameContainer, allQuestions)
     addButtons(gameContainer)
 
     container.appendChild(gameContainer)
+}
+
+function showQuestion(gameContainer, allQuestions) {
+    const questionContainer = document.createElement('div')
+    const question = document.createElement('p')
+
+    const optionContainer = document.createElement('div')
+    const form = document.createElement('form') 
+
+    const questions = allQuestions
+
+    console.log(questions)
+    questionContainer.classList.add('question-container')
+
+    optionContainer.classList.add('option-container')
+    form.classList.add('form')
+    form.id = 'form'
+
+    let currentQuestion = questions[0]
+    questions.pop()
+    console.log(currentQuestion)
+    addQuestion(gameContainer, currentQuestion)
+    addOptions(gameContainer, currentQuestion)
 }
 
 function addQuestion(gameContainer, quest) {
@@ -77,43 +105,11 @@ function addQuestion(gameContainer, quest) {
     const question = document.createElement('p')
 
     questionContainer.classList.add('question-container')
-
+    
     question.innerText = quest.question
 
     questionContainer.appendChild(question)
     gameContainer.appendChild(questionContainer)
-}
-
-function showQuestion(gameContainer) {
-    const questionContainer = document.createElement('div')
-    const question = document.createElement('p')
-
-    const optionContainer = document.createElement('div')
-    const form = document.createElement('form') 
-
-    const question1 = {
-        question: 'What color was the white horse of San Martín?',
-        correct_answer: 'White',
-        incorrect_answers: ['Black', 'Blue', 'San Martín did not have a horse']
-    }
-
-    const question2 = {
-        question: 'How many pairs are three boots?',
-        correct_answer: 'One and half',
-        incorrect_answers: ['One', 'Two', 'What is a pair']
-    }
-
-    const questions = [question1, question2]
-
-    questionContainer.classList.add('question-container')
-
-    optionContainer.classList.add('option-container')
-    form.classList.add('form')
-    form.id = 'form'
-
-    let currentQuestion = questions[Math.floor(Math.random() * questions.length)]
-    addQuestion(gameContainer, currentQuestion)
-    addOptions(gameContainer, currentQuestion)
 }
 
 function addOptions(gameContainer, quest) {
