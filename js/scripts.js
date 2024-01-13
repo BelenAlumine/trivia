@@ -1,4 +1,5 @@
 const rootDiv = document.querySelector('#root')
+let allQuestions = []
 
 const getDataGame = async () => {
     try {
@@ -16,20 +17,20 @@ const getDataGame = async () => {
 }
 
 async function main() {
-    let allQuestions = await getDataGame()
+    allQuestions = await getDataGame()
     
     createHomePage(allQuestions)
 }
 
 main()
 
-function createHomePage(allQuestions) {
+function createHomePage() {
     const container = document.createElement('div')
     const homePageContainer = document.createElement('div')
     const img = document.createElement('img')
     const button = document.createElement('button')
 
-    button.addEventListener('click', () => openGame(allQuestions))
+    button.addEventListener('click', () => openGame())
 
     //set class
     container.classList.add('container')
@@ -50,9 +51,9 @@ function createHomePage(allQuestions) {
     rootDiv.appendChild(container)
 }
 
-function openGame(allQuestions) {
+function openGame() {
     cleanPage()    
-    startGame(allQuestions)
+    startGame()
 }
 
 function cleanPage() {
@@ -63,7 +64,7 @@ function cleanPage() {
    }
 }
 
-function startGame(allQuestions) {
+function startGame() {
     const container = document.querySelector('#container')
 
     const gameContainer = document.createElement('div')
@@ -71,20 +72,20 @@ function startGame(allQuestions) {
     gameContainer.classList.add('game-container')
     gameContainer.id = 'game-container'
     
-    showQuestion(gameContainer, allQuestions)
+    showQuestion(gameContainer)
     addButtons(gameContainer)
 
     container.appendChild(gameContainer)
 }
 
-function showQuestion(gameContainer, allQuestions) {
+function showQuestion(gameContainer) {
     const questionContainer = document.createElement('div')
     const question = document.createElement('p')
 
     const optionContainer = document.createElement('div')
     const form = document.createElement('form') 
 
-    const questions = allQuestions
+    let questions = allQuestions
 
     console.log(questions)
     questionContainer.classList.add('question-container')
@@ -93,8 +94,7 @@ function showQuestion(gameContainer, allQuestions) {
     form.classList.add('form')
     form.id = 'form'
 
-    let currentQuestion = questions[0]
-    questions.pop()
+    let currentQuestion = questions.pop() 
     console.log(currentQuestion)
     addQuestion(gameContainer, currentQuestion)
     addOptions(gameContainer, currentQuestion)
@@ -144,18 +144,30 @@ function addOption(form, content) {
 }
 
 function addButtons(gameContainer) {
-    const playButtonContainer = document.createElement('div')
-    const playButton = document.createElement('button') 
+    const submitButtonContainer = document.createElement('div')
+    const submitButton = document.createElement('button') 
     const nextButton = document.createElement('button') 
 
-    playButtonContainer.classList.add('play-button-container')
-    playButton.classList.add('game-button', 'play')
+    nextButton.addEventListener('click', () => cleanQuestion(gameContainer))
+
+    submitButtonContainer.classList.add('submit-button-container')
+    submitButton.classList.add('game-button', 'submit')
     nextButton.classList.add('game-button', 'next')
 
-    playButton.innerText = "Play"
+    submitButton.innerText = "Submit"
     nextButton.innerText = "Next"
 
-    gameContainer.appendChild(playButtonContainer)
-    playButtonContainer.appendChild(playButton)
-    playButtonContainer.appendChild(nextButton)
+    gameContainer.appendChild(submitButtonContainer)
+    submitButtonContainer.appendChild(submitButton)
+    submitButtonContainer.appendChild(nextButton)
+}
+
+function cleanQuestion(gameContainer) {
+    const questionContainer = gameContainer.firstChild
+
+    while (gameContainer.firstChild) {
+         gameContainer.removeChild(gameContainer.firstChild)
+    }
+    showQuestion(gameContainer)
+    addButtons(gameContainer)
 }
