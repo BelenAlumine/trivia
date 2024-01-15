@@ -122,3 +122,7 @@ label:hover {
     color: black;
     cursor: pointer;
 }
+
+.selectedOption {
+    background-color: rgb(185, 3, 3);   
+}

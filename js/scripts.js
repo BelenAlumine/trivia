@@ -113,34 +113,41 @@ function addQuestion(gameContainer, quest) {
 }
 
 function addOptions(gameContainer, quest) {
+
     const optionContainer = document.createElement('div')
     const form = document.createElement('form') 
     const options = quest.incorrect_answers
     options.push(quest.correct_answer)
-
+    options.sort()
+    
     optionContainer.classList.add('option-container')
     form.classList.add('form')
     form.id = 'form'
 
     for (const option of options) {
-        addOption(form, option)
+        addOption(form, option, selectOption)
     }
     gameContainer.appendChild(optionContainer)
     optionContainer.appendChild(form)
 }
 
-function addOption(form, content) {
+function addOption(form, content, selectOption) {
     const input = document.createElement('input')
     const optionLabel = document.createElement('label')
+    //let currentOption
 
     input.type = 'radio'
     input.value = content
+    input.name = 'answer'
+    //input.id = ''
 
     optionLabel.innerText = content
     optionLabel.for = content
 
-    form.appendChild(input)    
+    optionLabel.appendChild(input)
     form.appendChild(optionLabel)
+
+    optionLabel.addEventListener('click', selectOption)
 }
 
 function addButtons(gameContainer) {
@@ -149,6 +156,7 @@ function addButtons(gameContainer) {
     const nextButton = document.createElement('button') 
 
     nextButton.addEventListener('click', () => cleanQuestion(gameContainer))
+    submitButton.addEventListener('click', () => submitOption(gameContainer))
 
     submitButtonContainer.classList.add('submit-button-container')
     submitButton.classList.add('game-button', 'submit')
@@ -160,6 +168,24 @@ function addButtons(gameContainer) {
     gameContainer.appendChild(submitButtonContainer)
     submitButtonContainer.appendChild(submitButton)
     submitButtonContainer.appendChild(nextButton)
+
+}
+
+function selectOption() {
+    const labels = document.querySelectorAll('label')
+    
+    for (label of labels) {
+        if (label.lastChild.checked) {
+            label.classList.add('selectedOption')
+        }
+        else {
+            label.classList.remove('selectedOption')
+        }
+    }
+}
+
+function submitOption(gameContainer) {
+
 }
 
 function cleanQuestion(gameContainer) {
