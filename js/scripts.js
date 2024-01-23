@@ -97,7 +97,6 @@ function showQuestion(gameContainer) {
     form.id = 'form'
 
     let currentQuestion = questions.pop() 
-    console.log(currentQuestion)
     addQuestion(gameContainer, currentQuestion)
     addOptions(gameContainer, currentQuestion)
 }
@@ -177,30 +176,34 @@ function selectOption() {
     
     for (label of labels) {
         if (label.lastChild.checked) {
-            currentOption = label.textContent
-            label.classList.add('selectedOption')
+            currentOption = label
+            label.classList.add('selected-option')
         }
         else {
-            label.classList.remove('selectedOption')
+            label.classList.remove('selected-option')
         }
     }
 }
 
 function submitOption(gameContainer) {
-    console.log(correctOption)
-    console.log(currentOption)
-    if (currentOption === correctOption) {
-        cleanQuestion(gameContainer)
-        gameContainer.innerText = 'CORRECT!'
-    }
-    else if (currentOption !== correctOption) {
-        cleanQuestion(gameContainer)
-        gameContainer.innerText = 'INCORRECT!'
+    const labels = document.querySelectorAll('label')
+
+    if (currentOption.textContent === correctOption) {
+        for (label of labels) {
+            if (label.lastChild.checked) {
+                label.classList.remove('selected-option')
+                label.classList.add('correct-option')
+            }
+        }
     }
     else {
-        gameContainer.innerText = 'You must chose one option'
+        for (label of labels) {
+            if (label.textContent === correctOption) {
+                label.classList.add('correct-option')
+            }
+        }
     }
-        addButtons(gameContainer)
+    
 }
 
 function cleanQuestion(gameContainer) {

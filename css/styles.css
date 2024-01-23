@@ -123,6 +123,10 @@ label:hover {
     cursor: pointer;
 }
 
-.selectedOption {
+.selected-option {
     background-color: rgb(185, 3, 3);   
+}
+
+.correct-option {
+    background-color: green;
 }
