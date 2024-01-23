@@ -1,5 +1,7 @@
 const rootDiv = document.querySelector('#root')
 let allQuestions = []
+let currentOption
+let correctOption
 
 const getDataGame = async () => {
     try {
@@ -113,10 +115,10 @@ function addQuestion(gameContainer, quest) {
 }
 
 function addOptions(gameContainer, quest) {
-
     const optionContainer = document.createElement('div')
     const form = document.createElement('form') 
     const options = quest.incorrect_answers
+    correctOption = quest.correct_answer
     options.push(quest.correct_answer)
     options.sort()
     
@@ -134,7 +136,6 @@ function addOptions(gameContainer, quest) {
 function addOption(form, content, selectOption) {
     const input = document.createElement('input')
     const optionLabel = document.createElement('label')
-    //let currentOption
 
     input.type = 'radio'
     input.value = content
@@ -155,7 +156,7 @@ function addButtons(gameContainer) {
     const submitButton = document.createElement('button') 
     const nextButton = document.createElement('button') 
 
-    nextButton.addEventListener('click', () => cleanQuestion(gameContainer))
+    nextButton.addEventListener('click', () => cleanQuestion(gameContainer))/////////////////////////////////////////////////////
     submitButton.addEventListener('click', () => submitOption(gameContainer))
 
     submitButtonContainer.classList.add('submit-button-container')
@@ -176,6 +177,7 @@ function selectOption() {
     
     for (label of labels) {
         if (label.lastChild.checked) {
+            currentOption = label.textContent
             label.classList.add('selectedOption')
         }
         else {
@@ -185,7 +187,20 @@ function selectOption() {
 }
 
 function submitOption(gameContainer) {
-
+    console.log(correctOption)
+    console.log(currentOption)
+    if (currentOption === correctOption) {
+        cleanQuestion(gameContainer)
+        gameContainer.innerText = 'CORRECT!'
+    }
+    else if (currentOption !== correctOption) {
+        cleanQuestion(gameContainer)
+        gameContainer.innerText = 'INCORRECT!'
+    }
+    else {
+        gameContainer.innerText = 'You must chose one option'
+    }
+        addButtons(gameContainer)
 }
 
 function cleanQuestion(gameContainer) {
