@@ -1,4 +1,5 @@
 const rootDiv = document.querySelector('#root')
+let correctAnswers = 0
 let allQuestions = []
 let currentOption
 let correctOption
@@ -74,10 +75,27 @@ function startGame() {
     gameContainer.classList.add('game-container')
     gameContainer.id = 'game-container'
     
+    addPoints(gameContainer)
     showQuestion(gameContainer)
     addButtons(gameContainer)
 
     container.appendChild(gameContainer)
+}
+
+function addPoints(gameContainer) {
+    const pointsContainer = document.createElement('div')
+    
+    const result = document.createElement('p')
+    const points = document.createElement('p')
+
+    pointsContainer.classList.add('points-container')
+    result.classList.add('result')
+    points.classList.add('points')
+    points.innerText = correctAnswers + '/20'
+
+    pointsContainer.appendChild(result)
+    pointsContainer.appendChild(points)
+    gameContainer.appendChild(pointsContainer)
 }
 
 function showQuestion(gameContainer) {
@@ -187,12 +205,18 @@ function selectOption() {
 
 function submitOption(gameContainer) {
     const labels = document.querySelectorAll('label')
+    const res = document.getElementsByClassName('result')
 
-    if (currentOption.textContent === correctOption) {
+    if (currentOption === null) {
+        alert('You must chose one option')
+    }
+    else if (currentOption.textContent === correctOption) {
         for (label of labels) {
             if (label.lastChild.checked) {
                 label.classList.remove('selected-option')
                 label.classList.add('correct-option')
+                correctAnswers += 1
+                res[0].innerText = 'CORRECT'
             }
         }
     }
@@ -200,10 +224,10 @@ function submitOption(gameContainer) {
         for (label of labels) {
             if (label.textContent === correctOption) {
                 label.classList.add('correct-option')
+                res[0].innerText = 'INCORRECT'
             }
         }
     }
-    
 }
 
 function cleanQuestion(gameContainer) {
@@ -212,6 +236,12 @@ function cleanQuestion(gameContainer) {
     while (gameContainer.firstChild) {
          gameContainer.removeChild(gameContainer.firstChild)
     }
-    showQuestion(gameContainer)
-    addButtons(gameContainer)
+    if (allQuestions.length > 0) {
+        addPoints(gameContainer)
+        showQuestion(gameContainer)
+        addButtons(gameContainer)
+    }
+    else {
+        gameContainer.innerText = 'Correct answers: ' + correctAnswers
+    }
 }
